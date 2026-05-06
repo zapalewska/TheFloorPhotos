@@ -434,7 +434,7 @@
 
         <div class="actions">
           <button id="passButton" type="button">PASS</button>
-          <button id="nextPhotoButton" type="button">Losuj zdjecie</button>
+          <button id="nextPhotoButton" type="button">Nastepne zdjecie</button>
           <button id="addButton" type="button">+5 s</button>
           <button class="danger" id="resetButton" type="button">Reset</button>
           <button id="hideButton" type="button">Ukryj panel</button>
@@ -713,20 +713,8 @@
         elements.categoryPhoto.alt = `${photo.name} - zdjecie do kategorii ${elements.categoryInput.value}`;
       }
 
-      function shuffle(values) {
-        const shuffled = [...values];
-        for (let index = shuffled.length - 1; index > 0; index -= 1) {
-          const randomIndex = Math.floor(Math.random() * (index + 1));
-          [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
-        }
-        return shuffled;
-      }
-
       function refillPhotoQueue(photos) {
-        state.photoQueue = shuffle(photos.map((_, index) => index));
-        if (photos.length > 1 && state.photoQueue[0] === state.photoIndex) {
-          state.photoQueue.push(state.photoQueue.shift());
-        }
+        state.photoQueue = photos.map((_, index) => index);
       }
 
       function randomizePhoto() {
@@ -881,7 +869,7 @@
 
         if (event.code === "Space") {
           event.preventDefault();
-          setRunning(!state.running);
+          randomizePhoto();
         }
 
         if (event.code === "Enter") {
